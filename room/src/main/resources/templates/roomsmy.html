@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+<title th:text="${users.getName()+' - ашылған чаттарыңыз'}"></title>
+<div layout:fragment="mainContent">
+    <div class = "row mt-5 justify-content-center">
+        <div class = "col-9 card">
+            <div class = "col-12">
+                <table>
+                    <tr>
+                        <td width="80%">
+                            <a th:text="${users.getName()+' / '}" th:href="@{'/user/profile/'+${users.getUrl()}}" style="color:#ffc222; text-decoration: none">
+
+                            </a>
+                            <a th:text="${users.getCountry().getName()}" style="color:#ffc222; text-decoration: none" th:href="@{'/city/'+${users.getCountry().getName()}}">
+
+                            </a>
+                        </td>
+                        <td width="20%">
+                            <a th:href="@{'/rooms/add'}" class = "btn btn-primary" style="height: 50px;" th:text="#{roomsmy.AddRoom}"></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class = "col-12 mt-2" th:each="r:${rooms}">
+                <div class = "col-12">
+                    <div class="mb-3 col-12">
+                        <table class = "col-9 mx-auto">
+                            <tr>
+                                <td width="80%" class="justify-content-around">
+                                    <img th:src="@{'/rooms/image/'+${r.getImage()}}" width="80px" height="80px" style="border-radius: 80px;">
+                                    <a class = "mx-md-2" th:href="@{'/rooms/room/'+${r.getId()}}" th:text="${r.getName()}" style="color: #ffc222; text-decoration: none;"></a>
+                                </td>
+                                <td width="20%">
+                                    <span th:if="${r.getAuthor().getId()==users.getId()}">
+                                        <a class = "btn" style="background-color: #ffc222" th:href="@{'/rooms/update/'+${r.getUrl()}}" th:text="#{rooms.Update}"></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class = "mt-3" th:if="${rooms.size()==0}">
+                <h4 class="text-center" style="color: #ffc222" th:text="#{rooms.NoRoom}"></h4>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+
+<div layout:fragment="mainContent">
+    <div class = "row mt-5 justify-content-center" th:if="${room!=null}">
+        <div class = "col-9">
+            <table class = "table table-bordered">
+                <tr>
+                    <td width="30%">
+                        <h6 th:text="${room.getName()}" style="color: #ffc222"></h6>
+                    </td>
+                    <td width="30%">
+                        <h6 th:text="${room.getUsers().size()+' memberies'}" style="color: #ffc222"></h6>
+                    </td>
+                    <td width="25">
+                        <h6 th:text="${'Создатель: '+ room.getAuthor().getName()}" style="color: #ffc222"></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <form method="post" th:action="@{'/api/updatecolor'}">
+                        <input type="hidden" name = "room_id" th:value="${room.getId()}">
+                        <td>
+                            <label style="color: #ffc222;" th:text="#{addroom.Color}"></label>
+                        </td>
+                        <td>
+                            <input required type = "text" name = "room_color" class="form-control" th:placeholder="#{addroom.ColorPlaceholder}">
+                        </td>
+                        <td>
+                            <button class = "btn btn-success">UPDATE</button>
+                        </td>
+                    </form>
+                </tr>
+            </table>
+        </div>
+        <div class = "col-9" style="height: 300px;" th:style="${'background-color: '+room.getColor()+';'}">
+
+        </div>
+    </div>
+</div>
+</html>

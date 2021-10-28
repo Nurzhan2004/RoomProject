@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+<title th:text="${users.getName()+' - сізге арналған чаттар'}"></title>
+<div layout:fragment="mainContent">
+    <div class = "row mt-5 justify-content-center">
+        <div class = "col-12 mt-2">
+            <div class = "col-6 mx-auto" th:if="${userRoom.size()==0}">
+                <h4 class = "text-center" style="color: #ffc222" th:text="#{rooms.NoRoom}"></h4>
+            </div>
+            <div class = "col-9 mx-auto" th:each="r:${userRoom}">
+                <div class="mb-3 col-12">
+                    <table class = "table table-bordered">
+                        <tr>
+                            <td width="40%" class="justify-content-around">
+                                <img th:src="@{'/rooms/image/'+${r.getImage()}}" width="80px" height="80px" style="border-radius: 80px;">
+                                <a class = "mx-md-2" th:href="@{'/rooms/room/'+${r.getId()}}" th:text="${r.getName()}" style="color: #ffc222; text-decoration: none;"></a>
+                            </td>
+                            <td width="40%">
+                                <a th:href="@{'/user/profile/'+${r.getAuthor().getUrl()}}" style="color: #ffc222;text-decoration: none" th:text="'Создатель: ' +${r.getAuthor().getName()}"></a>
+                            </td>
+                            <td width="20%">
+                                <form th:action="${'/api/removeuser'}" method = "post" th:if="${r.getAuthor().getId()!=users.getId()}">
+                                    <input type="hidden" name = "room_id" th:value = "${r.getId()}">
+                                    <button class = "btn btn-primary">Шығу</button>
+                                </form>
+                                <span th:if="${r.getAuthor().getId()==users.getId()}">
+                                    <a class = "btn" style="background-color: #ffc222" th:href="@{'/rooms/update/'+${r.getUrl()}}" th:text="#{rooms.Update}"></a>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class = "col-12 mt-5">
+            <div class = "col-6" th:if="${rooms.size()==0}">
+                <h4 class="text-center" style="color: #ffc222" th:text="#{rooms.NoRoom}"></h4>
+            </div>
+            <div class = "col-9 mx-auto" th:each="r:${rooms}">
+                <div class="mb-3 col-12">
+                    <table class = "table table-bordered">
+                        <tr>
+                            <td width="40%" class="justify-content-around">
+                                <img th:src="@{'/rooms/image/'+${r.getImage()}}" width="80px" height="80px" style="border-radius: 80px;">
+                                <a class = "mx-md-2" th:href="@{'/rooms/room/'+${r.getId()}}" th:text="${r.getName()}" style="color: #ffc222; text-decoration: none;"></a>
+                            </td>
+                            <td width="40%">
+                                <a th:href="@{'/user/profile/'+${r.getAuthor().getUrl()}}" style="color: #ffc222;text-decoration: none" th:text="'Создатель: ' +${r.getAuthor().getName()}"></a>
+                            </td>
+                            <td width="20%">
+                                <form th:action="${'/api/adduser'}" method="post">
+                                    <input type="hidden" name = "room_id" th:value="${r.getId()}">
+                                    <button class = "btn btn-primary" th:text="#{rooms.Update}"></button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

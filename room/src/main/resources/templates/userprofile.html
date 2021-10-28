@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+<title th:text="${user.getName()+'- туралы мәліметтер'}"></title>
+<div layout:fragment="mainContent">
+    <div class = "row mt-5">
+        <div class = "col-6 mx-auto">
+            <div class="d-block">
+                <img th:src="@{'/user/image/'+${user.getImage()}}" width="100%" height="400px">
+            </div>
+            <table class = "table table-bordered">
+                <tr class="mt-1">
+                    <td width="50%">
+                        <p style="font-size: 15px" th:text="#{getUserprofile.name}"></p>
+                    </td>
+                    <td width="50%">
+                        <h5 style="color: #ffc222" th:text="${user.getName()}"></h5>
+                    </td>
+                </tr>
+                <tr class="mt-2">
+                    <td width="50%">
+                        <p style="font-size: 15px" th:text="#{getUserprofile.surname}"></p>
+                    </td>
+                    <td width="50%">
+                        <h5 style="color: #ffc222" th:text="${user.getSurname()}"></h5>
+                    </td>
+                </tr>
+                <tr class="mt-2">
+                    <td width="50%">
+                        <p style="font-size: 15px" th:text="#{register.Url}"></p>
+                    </td>
+                    <td width="50%">
+                        <h5 style="color: #ffc222" th:text="${'@'+user.getUrl()}"></h5>
+                    </td>
+                </tr>
+                <tr class="mt-2">
+                    <td width="50%">
+                        <p style="font-size: 15px" th:text="#{register.city}"></p>
+                    </td>
+                    <td width="50%">
+                        <h5 style="color: #ffc222" th:text="${user.getCountry().getName()}"></h5>
+                    </td>
+                </tr>
+                <tr class="mt-2">
+                    <td width="50%">
+                        <p style="font-size: 15px" th:text="#{getUserprofile.email}"></p>
+                    </td>
+                    <td width="50%">
+                        <h5 style="color: #ffc222" th:text="${user.getEmail()}"></h5>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</html>

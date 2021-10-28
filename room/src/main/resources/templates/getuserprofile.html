@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+<title th:text="${user.getName()+'- мәліметтеріңізді түзету'}"></title>
+<div layout:fragment="mainContent">
+    <div class = "row mt-5">
+        <div class = "col-6 mx-auto">
+            <form th:action="@{'/user/profile/image'}" method="post" enctype="multipart/form-data">
+                <div class="d-block">
+                    <img th:src="@{'/user/image/'+${user.getImage()}}" width="100%" height="400px">
+                </div>
+                <div class = "d-flex justify-content-between">
+                    <div class="mb-3 col-9 mx-2">
+                        <label for="formFile" class="form-label" th:text="#{getuserprofile.choosefile}"></label>
+                        <input class="form-control" type="file" id="formFile" name = "image">
+                    </div>
+                    <div class = "col-3 mt-5">
+                        <button class = "btn" style="background-color: #ffc222;" th:text="#{getuserprofile.update}"></button>
+                    </div>
+                </div>
+            </form>
+            <div id="s" th:text="#{getuserprofile.errorS}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.s!=null)}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <form th:action="@{'/user/updateprofile'}" method="post">
+                <table class = "table table-bordered">
+                    <tr class="mt-1">
+                        <td width="50%">
+                            <p style="font-size: 15px" th:text="#{getUserprofile.name}"></p>
+                        </td>
+                        <td width="50%">
+                            <input type="text" name = "user_name" th:value="${user.getName()}" required class = "form-control">
+                        </td>
+                    </tr>
+                    <tr class="mt-2">
+                        <td width="50%">
+                            <p style="font-size: 15px" th:text="#{getUserprofile.surname}"></p>
+                        </td>
+                        <td width="50%">
+                            <input type="text" name = "user_surname" th:value="${user.getSurname()}" required class = "form-control">
+                        </td>
+                    </tr>
+                    <tr class="mt-2">
+                        <td width="50%">
+                            <p style="font-size: 15px" th:text="#{addroom.Url}"></p>
+                        </td>
+                        <td width="50%">
+                            <input type="text" name = "user_url" th:value="${user.getUrl()}" required class = "form-control">
+                        </td>
+                    </tr>
+                    <tr class="mt-2">
+                        <td width="50%">
+                            <p style="font-size: 15px" th:text="#{addroom.City}"></p>
+                        </td>
+                        <td width="50%">
+                            <input type="text" readonly th:value="${user.getCountry().getName()}" class = "form-control">
+                        </td>
+                    </tr>
+                    <tr class="mt-2">
+                        <td width="50%">
+                            <p style="font-size: 15px" th:text="#{getUserprofile.email}"></p>
+                        </td>
+                        <td width="50%">
+                            <input type="text" readonly th:value="${user.getEmail()}" class = "form-control">
+                        </td>
+                    </tr>
+                    <tr class="mt-2">
+                        <td class="justify-content-center">
+                            <button class = "btn " style="background-color: #ffc222;" th:text="#{getuserprofile.update}"></button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <div id="retypepasswordError" th:text="#{getuserprofile.NewPasswordError}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.retypepasswordError!=null)}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div id="oldpasswordError" th:text="#{getuserprofile.PasswordError}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.oldpasswordError!=null)}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div id="success" th:text="#{getuserprofile.PasswordSuccess}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.success!=null)}">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form th:action="@{'/user/updatepassword'}" method="post">
+                <table class = "table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td width="30%">
+                                <input placeholder="Old Password" type = "password" name = "old_password" class = "form-control" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%">
+                                <input placeholder="New Password" type="password" name = "new_password" class = "form-control" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%">
+                                <input placeholder="Retype New Password" type = "password" name = "re_new_password" class = "form-control" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="justify-content-center">
+                                <button class = "btn" style="background-color: #ffc222;" th:text="#{getUserprofile.UpdatePassword}"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

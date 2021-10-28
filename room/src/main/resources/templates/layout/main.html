@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" th:href="@{'/css/bootstrap.css'}">
+</head>
+<body >
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-12">
+                <nav class="navbar navbar-expand-lg" style="background-color: #ffc222;">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" th:text="#{main.Room}"></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAnonymous()">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{'/'}" th:text="#{main.home}"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{'/loginpage'}" th:text="#{main.SignIn}"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{'/register'}" th:text="#{main.SignUp}"></a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" th:text="#{'main.language'}"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" th:href="@{'?lng=en'}">ENG</a></li>
+                                        <li><a class="dropdown-item" th:href="@{'?lng=ru'}">РУС</a></li>
+                                        <li><a class="dropdown-item" th:href="@{'?lng=kz'}">ҚАЗ</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="isAuthenticated()">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{'/rooms/my'}" th:text="#{main.MyRooms}"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{'/rooms/'}" th:text="#{main.Rooms}"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="JavaScript:void(0)" onclick="logout()" th:text="#{main.LogOut}"></a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" th:text="#{'main.language'}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" th:href="@{'?lng=en'}">ENG</a></li>
+                                        <li><a class="dropdown-item" th:href="@{'?lng=ru'}">РУС</a></li>
+                                        <li><a class="dropdown-item" th:href="@{'?lng=kz'}">ҚАЗ</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <form th:action="@{'/tologout'}" method="post" id = "logoutForm">
+                            </form>
+                            <script type="text/javascript">
+                                function logout() {
+                                    document.getElementById("logoutForm").submit();
+                                }
+                            </script>
+                            <form class="d-flex" sec:authorize="isAuthenticated()">
+                                <input class="form-control me-2" type="search" th:placeholder="#{main.Search}" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit" th:text="#{main.Search}"></button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class = "container">
+        <div class = "col-12" layout:fragment="mainContent">
+
+        </div>
+    </div>
+
+</body>
+    <script type="text/javascript" th:src="@{'/js/bootstrap.js'}"></script>
+</html>

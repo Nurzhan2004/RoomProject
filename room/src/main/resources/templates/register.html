@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+<title >Тіркелу бөлімі</title>
+<div layout:fragment="mainContent">
+    <div class = "row mt-5">
+        <div class = "col-6 mx-auto">
+            <div th:text="#{register.EmailError}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.emailzaregistirovan!=null)}">
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:text="#{register.UrlError}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.urlzaregistirovan!=null)}">
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:text="#{getuserprofile.errorS}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.urlerror!=null)}">
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form th:action="@{'/register'}" method="post">
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="color: #ffc222;" th:text="#{register.name}"></th>
+                        <th style="color: #ffc222;" th:text="#{register.surname}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" name="user_name" class="form-control" required th:placeholder="#{register.NamePlaceholder}">
+                        </td>
+                        <td>
+                            <input type="text" name="user_surname" class="form-control" required th:placeholder="#{register.SurnamePlaceholder}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class = "mt-2">
+                    <div class ="mt-1">
+                        <label style="color:#ffc222;"  th:text="#{register.Email}"></label>
+                    </div>
+                    <div class ="mt-1">
+                        <input type="email" class = "form-control" required name = "user_email" th:placeholder="#{register.EmailPlaceholder}">
+                    </div>
+                </div>
+                <div class = "mt-2">
+                    <div class ="mt-1">
+                        <label style="color:#ffc222;" th:text="#{register.Password}"></label>
+                    </div>
+                    <div>
+                        <input type="password" name = "user_password" required th:placeholder="#{register.PasswordPlaceholder}" class = "form-control">
+                    </div>
+                </div>
+                <div class = "mt-2">
+                    <div class = "mt-1">
+                    <label style="color:#ffc222;" th:text="#{register.Url}"></label>
+                    </div>
+                    <div class = "mt-1">
+                        <input type = "text" name = "user_url" class = "form-control" th:placeholder="#{register.UrlPlaceholder}">
+                    </div>
+                </div>
+                <div class = "mt-2">
+                    <div class = "mt-1">
+                        <label style="color:#ffc222;" th:text="#{register.city}"></label>
+                    </div>
+                    <div class = "mt-1">
+                        <select class="form-control col-3" name="country_id">
+                            <option th:each="c:${countries}" th:text="${c.getName()}" th:value="${c.getId()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class = "mt-2 d-flex justify-content-center">
+                    <button class = "btn" style="background-color: #033E3E; width: 300px; color: #ffc222;" th:text="#{main.SignUp}"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

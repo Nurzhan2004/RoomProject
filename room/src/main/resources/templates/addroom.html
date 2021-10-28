@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorator="layout/main.html">
+
+<div layout:fragment="mainContent">
+    <div class = "row mt-5">
+        <div class = "col-9 card">
+            <div class = "col-2 mt-2">
+                <a th:text="${users.getName()}" th:href="@{'/user/profile/'+${users.getUrl()}}" style="color:#ffc222; text-decoration: none"></a>
+            </div>
+            <div th:text="#{addroom.ErrorAddRoom}" class="alert alert-danger alert-dismissible fade show" role="alert" th:if = "${(param.url!=null)}">
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class = "col-12">
+                <form th:action="${'/api/add'}" method="post">
+                    <div class = "mt-1">
+                        <label style="color: #ffc222;" th:text="#{addroom.name}"></label>
+                    </div>
+                    <div class = "mt-1">
+                        <input type="text" required name = "room_name" class = "form-control" th:placeholder="#{addroom.name}">
+                    </div>
+                    <div class = "mt-1">
+                        <label style="color: #ffc222;" th:text="#{addroom.Url}"></label>
+                    </div>
+                    <div class = "mt-1">
+                        <input type="text" required name = "room_url" class = "form-control" th:placeholder="#{addroom.UrlPlaceholder}">
+                    </div>
+                    <div class = "mt-1">
+                        <label style="color:#ffc222;" th:text="#{addroom.City}"></label>
+                    </div>
+                    <div class = "mt-1">
+                        <select class="form-control col-3" name="country_id" readonly>
+                            <option th:text="${users.getCountry().getName()}" th:value="${users.getCountry().getId()}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style = "color: #ffc222;" th:text="#{addroom.Color}"></label>
+                    </div>
+                    <div>
+                        <input type = "text" name = "room_color" class = "form-control" th:placeholder="#{addroom.ColorPlaceholder}">
+                    </div>
+                    <div class = "mt-1 justify-content-center">
+                        <button class = "btn btn-primary" th:text="#{addroom.AddButton}"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
